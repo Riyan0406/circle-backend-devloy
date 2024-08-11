@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DB_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  fullname String
+  email String
+  password String
+  profile Profile?
+  threads Thread[]
+  followedBy Follow[] @relation("followedBy")
+  following Follow[] @relation("following")
+  like Like[]
+}
+
+model Profile {
+  id String @id @default(uuid())
+  userId String @unique
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  username String
+  avatar String
+  cover String
+  bio String
+}
+
+model Thread {
+  id String @id @default(uuid())
+  content String
+  userId String
+  threadId String?
+  createdAt DateTime @default(now())
+  author User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  image ThreadImage[]
+  like Like[]
+  parent Thread? @relation("replies", fields: [threadId], references: [id], onDelete: Cascade)
+  replies Thread[] @relation("replies")
+}
+
+model ThreadImage {
+  id Int @id @default(autoincrement())
+  url String
+  threadId String
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Follow {
+  followedBy User @relation("followedBy", fields: [followedById], references: [id], onDelete: Cascade)
+  followedById String
+  following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String
+  createdAt DateTime @default(now())
+
+  @@id([followingId, followedById])
+}
+
+model Like {
+  userId String
+  threadId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, threadId])
+}
