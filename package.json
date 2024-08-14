@@ -5,7 +5,7 @@
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "dev": "nodemon APP.ts",
-      "build": "npx tsc && prisma generate",
+      "build": "tsc",
       "start": "node dist/APP.js",
       "postinstall": "prisma generate && prisma migrate deploy"
    },
