@@ -14,11 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 
-app.use(cors({
-   origin: 'http://localhost:5173',
-   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-   credentials: true
-}));
+app.use(cors());
 
 app.use(indexRouter);
 
