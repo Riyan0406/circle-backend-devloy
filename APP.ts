@@ -10,11 +10,19 @@ dotenv.config();
 const PORT = process.env.PORT || 5300;
 const app = express();
 
+// CORS Configuration
+const allowedOrigins = ["http://localhost:5173"];
+const corsOptions = {
+   origin: allowedOrigins,
+   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+   allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
-
-app.use(cors());
 
 app.use(indexRouter);
 
