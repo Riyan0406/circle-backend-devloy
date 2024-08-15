@@ -1,27 +1,32 @@
-import express from "express"
-import dotenv from "dotenv"
-import cors from "cors"
-import db from "./src/lib/db"
-import indexRouter from "./src/routers"
-import path from "path"
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import db from "./src/lib/db";
+import indexRouter from "./src/routers";
+import path from "path";
 
-dotenv.config()
+dotenv.config();
 
-const PORT = process.env.PORT || 5300
-const app = express()
+const PORT = process.env.PORT || 5300;
+const app = express();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use("/uploads", express.static(path.join(__dirname, "src/uploads")))
-app.use(cors())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 
-app.use(indexRouter)
+app.use(cors({
+   origin: 'http://localhost:5173',
+   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+   credentials: true
+}));
+
+app.use(indexRouter);
 
 app.get("/", (req, res) => {
-   res.send("CIRCLE APP - API")
-})
+   res.send("CIRCLE APP - API");
+});
 
 app.listen(+PORT, async () => {
-   await db.$connect()
-   console.log("Server is running at port " + PORT)
-})
+   await db.$connect();
+   console.log("Server is running at port " + PORT);
+});
