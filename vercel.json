@@ -34,11 +34,5 @@
                 }
             ]
         }
-    ],
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "APP.ts"
-        }
     ]
 }
