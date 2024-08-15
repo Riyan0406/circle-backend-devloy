@@ -18,8 +18,8 @@ export async function createUser(body: User): Promise<User> {
       data: {
          userId: newUser.id,
          username: username,
-         avatar: "https://res.cloudinary.com/dbzdxsmvy/image/upload/v1715825082/default/oubwrmv1cmteup0iuu7a.png",
-         cover: "https://res.cloudinary.com/dbzdxsmvy/image/upload/v1715825082/default/h9avlwzp3lj3hlunlzbc.webp",
+         avatar: "",
+         cover: "",
          bio: ""
       }
    });

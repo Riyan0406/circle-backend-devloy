@@ -30,8 +30,8 @@ model Profile {
   userId String @unique
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   username String
-  avatar String
-  cover String
+  avatar String?
+  cover String?
   bio String
 }
 

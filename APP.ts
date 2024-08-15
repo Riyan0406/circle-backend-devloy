@@ -10,15 +10,7 @@ dotenv.config();
 const PORT = process.env.PORT || 5200;
 const app = express();
 
-// CORS Configuration
-const allowedOrigins = ["http://localhost:5173"];
-const corsOptions = {
-   origin: allowedOrigins,
-   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-   allowedHeaders: ["Content-Type", "Authorization"]
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
